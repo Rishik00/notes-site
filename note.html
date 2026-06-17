@@ -6,10 +6,13 @@
   <title>Note</title>
   <link rel="stylesheet" href="style.css" />
   <script>
+    // Mirror ReadXiv's note convention (client/src/utils/mathjax.js):
+    //   $$…$$ and $…$ = inline · $$$$…$$$$ and \[…\] = display.
+    // `$$` listed before `$` so the longer delimiter pair resolves first.
     window.MathJax = {
       tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        inlineMath: [['$$', '$$'], ['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$$$', '$$$$'], ['\\[', '\\]']]
       },
       options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
     };
@@ -48,15 +51,25 @@
     function protectMath(src) {
       const store = [];
       const stash = (s) => { store.push(s); return '@@MATH_' + (store.length - 1) + '@@'; };
+      // Dollar-delimited math first (longest run first) so each span is grabbed
+      // whole — otherwise \[ / \( inside a $…$ span (e.g. escaped markdown like
+      // `$D\=\[…]$`) would fragment it and expose underscores to markdown-it.
       let out = src;
-      out = out.replace(/\$\$[\s\S]*?\$\$/g, stash);     // display $$...$$
-      out = out.replace(/\\\[[\s\S]*?\\\]/g, stash);      // display \[...\]
-      out = out.replace(/\\\([\s\S]*?\\\)/g, stash);      // inline \(...\)
+      out = out.replace(/\$\$\$\$[\s\S]*?\$\$\$\$/g, stash); // display $$$$...$$$$
+      out = out.replace(/\$\$[\s\S]*?\$\$/g, stash);         // inline  $$...$$
       out = out.replace(/(?<!\$)\$(?!\$)[^\n$]+?\$(?!\$)/g, stash); // inline $...$
+      out = out.replace(/\\\[[\s\S]*?\\\]/g, stash);         // display \[...\]
+      out = out.replace(/\\\([\s\S]*?\\\)/g, stash);         // inline  \(...\)
       return { out, store };
     }
     function restoreMath(html, store) {
-      return html.replace(/@@MATH_(\d+)@@/g, (_, i) => store[Number(i)]);
+      // Loop in case a span captured a placeholder from an earlier pass (nesting).
+      let prev;
+      do {
+        prev = html;
+        html = html.replace(/@@MATH_(\d+)@@/g, (_, i) => store[Number(i)]);
+      } while (html !== prev && /@@MATH_\d+@@/.test(html));
+      return html;
     }
 
     function getId() {

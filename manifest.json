@@ -8,8 +8,59 @@
       "id": "1706.03762",
       "title": "Attention Is All You Need",
       "authors": "Vaswani et al.",
-      "tags": ["transformers", "attention", "nlp"],
+      "tags": [
+        "transformers",
+        "attention",
+        "nlp"
+      ],
       "template": "summary",
+      "published_at": "2026-06-17"
+    },
+    {
+      "id": "1811.04551",
+      "title": "Learning Latent Dynamics for Planning from Pixels",
+      "authors": "Danijar Hafner et al.",
+      "tags": [
+        "world-models",
+        "rl",
+        "planning"
+      ],
+      "template": "freeform",
+      "published_at": "2026-06-17"
+    },
+    {
+      "id": "2301.08243",
+      "title": "Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture",
+      "authors": "Mahmoud Assran et al.",
+      "tags": [
+        "self-supervised",
+        "jepa",
+        "vision"
+      ],
+      "template": "freeform",
+      "published_at": "2026-06-17"
+    },
+    {
+      "id": "2507.06952",
+      "title": "What Has a Foundation Model Found? Using Inductive Bias to Probe for World Models",
+      "authors": "",
+      "tags": [
+        "world-models",
+        "foundation-models",
+        "probing"
+      ],
+      "template": "freeform",
+      "published_at": "2026-06-17"
+    },
+    {
+      "id": "2505.05522",
+      "title": "Continuous Thought Machines",
+      "authors": "Luke Darlow et al.",
+      "tags": [
+        "neural-dynamics",
+        "architecture"
+      ],
+      "template": "freeform",
       "published_at": "2026-06-17"
     }
   ]
