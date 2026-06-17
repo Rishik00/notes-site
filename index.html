@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reading Notes</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap">
+    <header class="site-head">
+      <h1 id="site-title">Reading Notes</h1>
+      <p id="site-subtitle"></p>
+    </header>
+    <ul class="note-list" id="list">
+      <li class="state">Loading…</li>
+    </ul>
+  </main>
+
+  <script>
+    function fmtDate(s) {
+      if (!s) return '';
+      const d = new Date(s);
+      if (isNaN(d)) return s;
+      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    async function load() {
+      const list = document.getElementById('list');
+      let manifest;
+      try {
+        const res = await fetch('manifest.json?_=' + Date.now());
+        manifest = await res.json();
+      } catch (e) {
+        list.innerHTML = '<li class="state">Could not load manifest.json.</li>';
+        return;
+      }
+
+      if (manifest.site) {
+        if (manifest.site.title) {
+          document.getElementById('site-title').textContent = manifest.site.title;
+          document.title = manifest.site.title;
+        }
+        if (manifest.site.subtitle) {
+          document.getElementById('site-subtitle').textContent = manifest.site.subtitle;
+        }
+      }
+
+      const notes = (manifest.notes || []).slice().sort((a, b) =>
+        String(b.published_at || '').localeCompare(String(a.published_at || ''))
+      );
+
+      if (!notes.length) {
+        list.innerHTML = '<li class="state">No notes published yet.</li>';
+        return;
+      }
+
+      list.innerHTML = notes.map((n) => {
+        const tags = (n.tags || []).map((t) => '<span class="tag">' + t + '</span>').join('');
+        const meta = [n.authors, fmtDate(n.published_at)].filter(Boolean).join(' · ');
+        return (
+          '<li><a href="note.html?id=' + encodeURIComponent(n.id) + '">' +
+          '<div class="nt">' + (n.title || n.id) + '</div>' +
+          '<div class="meta"><span>' + meta + '</span>' + tags + '</div>' +
+          '</a></li>'
+        );
+      }).join('');
+    }
+
+    load();
+  </script>
+</body>
+</html>

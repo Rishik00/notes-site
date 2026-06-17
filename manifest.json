@@ -1,0 +1,16 @@
+{
+  "site": {
+    "title": "Reading Notes",
+    "subtitle": "Notes on papers, taken while reading."
+  },
+  "notes": [
+    {
+      "id": "1706.03762",
+      "title": "Attention Is All You Need",
+      "authors": "Vaswani et al.",
+      "tags": ["transformers", "attention", "nlp"],
+      "template": "summary",
+      "published_at": "2026-06-17"
+    }
+  ]
+}

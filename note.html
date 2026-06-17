@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Note</title>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it@14/dist/markdown-it.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+  <main class="wrap">
+    <a class="back" href="index.html">← All notes</a>
+    <div id="root"><div class="state">Loading…</div></div>
+  </main>
+
+  <script>
+    // --- tiny YAML frontmatter parser (subset: scalars + inline arrays) ---
+    function parseFrontmatter(text) {
+      const m = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/.exec(text);
+      if (!m) return { data: {}, body: text };
+      const data = {};
+      for (const line of m[1].split(/\r?\n/)) {
+        const kv = /^([A-Za-z0-9_-]+)\s*:\s*(.*)$/.exec(line);
+        if (!kv) continue;
+        let [, key, val] = kv;
+        val = val.trim();
+        if (/^\[.*\]$/.test(val)) {
+          val = val.slice(1, -1).split(',').map((s) => s.trim().replace(/^["']|["']$/g, '')).filter(Boolean);
+        } else {
+          val = val.replace(/^["']|["']$/g, '');
+        }
+        data[key] = val;
+      }
+      return { data, body: text.slice(m[0].length) };
+    }
+
+    // --- protect math from markdown, restore raw afterwards ---
+    function protectMath(src) {
+      const store = [];
+      const stash = (s) => { store.push(s); return '@@MATH_' + (store.length - 1) + '@@'; };
+      let out = src;
+      out = out.replace(/\$\$[\s\S]*?\$\$/g, stash);     // display $$...$$
+      out = out.replace(/\\\[[\s\S]*?\\\]/g, stash);      // display \[...\]
+      out = out.replace(/\\\([\s\S]*?\\\)/g, stash);      // inline \(...\)
+      out = out.replace(/(?<!\$)\$(?!\$)[^\n$]+?\$(?!\$)/g, stash); // inline $...$
+      return { out, store };
+    }
+    function restoreMath(html, store) {
+      return html.replace(/@@MATH_(\d+)@@/g, (_, i) => store[Number(i)]);
+    }
+
+    function getId() {
+      return new URLSearchParams(location.search).get('id');
+    }
+
+    function esc(s) {
+      return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    }
+
+    async function render() {
+      const root = document.getElementById('root');
+      const id = getId();
+      if (!id) { root.innerHTML = '<div class="state">No note id given.</div>'; return; }
+
+      let raw;
+      try {
+        const res = await fetch('notes/' + encodeURIComponent(id) + '.md?_=' + Date.now());
+        if (!res.ok) throw new Error('not found');
+        raw = await res.text();
+      } catch (e) {
+        root.innerHTML = '<div class="state">Could not load this note.</div>';
+        return;
+      }
+
+      const { data, body } = parseFrontmatter(raw);
+      const md = window.markdownit({ html: false, linkify: true, typographer: true });
+      const { out, store } = protectMath(body);
+      let html = md.render(out);
+      html = restoreMath(html, store);
+
+      const title = data.title || id;
+      document.title = title;
+
+      let byline = '';
+      const bits = [];
+      if (data.authors) bits.push(esc(data.authors));
+      if (data.arxiv) bits.push('<a href="https://arxiv.org/abs/' + esc(data.arxiv) + '" target="_blank" rel="noopener">arXiv:' + esc(data.arxiv) + '</a>');
+      if (bits.length) byline = '<p class="byline">' + bits.join(' · ') + '</p>';
+
+      let tags = '';
+      if (Array.isArray(data.tags) && data.tags.length) {
+        tags = '<div class="tags">' + data.tags.map((t) => '<span class="tag">' + esc(t) + '</span>').join('') + '</div>';
+      }
+
+      root.innerHTML =
+        '<header class="note-head"><h1>' + esc(title) + '</h1>' + byline + tags + '</header>' +
+        '<article class="content">' + html + '</article>';
+
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise([root]).catch(() => {});
+      }
+    }
+
+    render();
+  </script>
+</body>
+</html>
