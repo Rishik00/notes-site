@@ -47,10 +47,35 @@
       return { data, body: text.slice(m[0].length) };
     }
 
-    // --- protect math from markdown, restore raw afterwards ---
+    // Decode HTML entities (the editor stores trailing spaces as &#x20;, etc.).
+    function decodeEntities(s) {
+      const t = document.createElement('textarea');
+      t.innerHTML = s;
+      return t.value;
+    }
+
+    // The notes editor escapes markdown punctuation when saving, so stored math
+    // arrives as `\left\[`, `\lambda\_{dec}`, `\=`, `\+`. MathJax needs the real
+    // chars. Unescape the punctuation the editor adds (\_ \[ \] \( \) \= \+ \-)
+    // but NOT \<letter> commands (\frac) or LaTeX spacing (\!, \,, \;) — those
+    // are intentional. Then make the result HTML-safe; MathJax reads it back.
+    function normalizeMath(span) {
+      const pairs = [['$$$$', '$$$$'], ['$$', '$$'], ['\\[', '\\]'], ['\\(', '\\)'], ['$', '$']];
+      let open = '', close = '', inner = span;
+      for (const [o, c] of pairs) {
+        if (span.length >= o.length + c.length && span.startsWith(o) && span.endsWith(c)) {
+          open = o; close = c; inner = span.slice(o.length, span.length - c.length); break;
+        }
+      }
+      inner = decodeEntities(inner).replace(/\\([_[\]()=+\-])/g, '$1');
+      inner = inner.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return open + inner + close;
+    }
+
+    // --- protect math from markdown, restore (normalized) afterwards ---
     function protectMath(src) {
       const store = [];
-      const stash = (s) => { store.push(s); return '@@MATH_' + (store.length - 1) + '@@'; };
+      const stash = (s) => { store.push(normalizeMath(s)); return '@@MATH_' + (store.length - 1) + '@@'; };
       // Dollar-delimited math first (longest run first) so each span is grabbed
       // whole — otherwise \[ / \( inside a $…$ span (e.g. escaped markdown like
       // `$D\=\[…]$`) would fragment it and expose underscores to markdown-it.
@@ -110,13 +135,8 @@
       if (data.arxiv) bits.push('<a href="https://arxiv.org/abs/' + esc(data.arxiv) + '" target="_blank" rel="noopener">arXiv:' + esc(data.arxiv) + '</a>');
       if (bits.length) byline = '<p class="byline">' + bits.join(' · ') + '</p>';
 
-      let tags = '';
-      if (Array.isArray(data.tags) && data.tags.length) {
-        tags = '<div class="tags">' + data.tags.map((t) => '<span class="tag">' + esc(t) + '</span>').join('') + '</div>';
-      }
-
       root.innerHTML =
-        '<header class="note-head"><h1>' + esc(title) + '</h1>' + byline + tags + '</header>' +
+        '<header class="note-head"><h1>' + esc(title) + '</h1>' + byline + '</header>' +
         '<article class="content">' + html + '</article>';
 
       if (window.MathJax && window.MathJax.typesetPromise) {

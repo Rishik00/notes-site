@@ -55,13 +55,12 @@
         return;
       }
 
-      list.innerHTML = notes.map((n) => {
-        const tags = (n.tags || []).map((t) => '<span class="tag">' + t + '</span>').join('');
+      list.innerHTML = notes.map((n, idx) => {
         const meta = [n.authors, fmtDate(n.published_at)].filter(Boolean).join(' · ');
         return (
-          '<li><a href="note.html?id=' + encodeURIComponent(n.id) + '">' +
+          '<li style="--i:' + idx + '"><a href="note.html?id=' + encodeURIComponent(n.id) + '">' +
           '<div class="nt">' + (n.title || n.id) + '</div>' +
-          '<div class="meta"><span>' + meta + '</span>' + tags + '</div>' +
+          '<div class="meta"><span>' + meta + '</span></div>' +
           '</a></li>'
         );
       }).join('');

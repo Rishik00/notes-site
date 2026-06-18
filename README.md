@@ -10,7 +10,7 @@ The public site that ReadXiv publishes notes to. It is a plain static site
 | `index.html`    | Lists every published note, read from `manifest.json`.            |
 | `note.html`     | The one template. `note.html?id=<arxivId>` fetches `notes/<id>.md`, renders the markdown, and typesets equations. |
 | `style.css`     | All styling (light + dark).                                       |
-| `manifest.json` | Index of published notes (id, title, authors, tags, date).        |
+| `manifest.json` | Index of published notes (id, title, authors, date).              |
 | `notes/*.md`    | The published note files, copied here by ReadXiv on publish.      |
 
 Markdown is rendered in the browser with **markdown-it**; equations with
