@@ -31,6 +31,13 @@
       "authors": "Nathan Godey, Yoav Artzi",
       "template": "freeform",
       "published_at": "2026-07-11"
+    },
+    {
+      "id": "2605.20670",
+      "title": "LT2: Linear-Time Looped Transformers",
+      "authors": "Chunyuan Deng, Yizhe Zhang, Rui-Jie Zhu, Yuanyuan Xu, Jiarui Liu, T. S. Eugene Ng, Hanjie Chen",
+      "template": "freeform",
+      "published_at": "2026-07-11"
     }
   ]
 }
