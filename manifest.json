@@ -38,6 +38,13 @@
       "authors": "Chunyuan Deng, Yizhe Zhang, Rui-Jie Zhu, Yuanyuan Xu, Jiarui Liu, T. S. Eugene Ng, Hanjie Chen",
       "template": "freeform",
       "published_at": "2026-07-11"
+    },
+    {
+      "id": "2607.20548",
+      "title": "SOAP, Muon, and Beyond: Pushing LLM Pretraining Scales",
+      "authors": "Mikail Khona, Aditya Vavre, Boxiang Wang, Deyu Fu, Hao Wu, Mike Chrzanowski, Bryan Catanzaro, Dheevatsa Mudigere, Jeff Pool, Michael Lightstone, Mohammad Shoeybi, Mostofa Patwary, Nima Tajbakhsh, Tijmen Blankevoort",
+      "template": "freeform",
+      "published_at": "2026-07-31"
     }
   ]
 }
