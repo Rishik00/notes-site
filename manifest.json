@@ -52,6 +52,13 @@
       "authors": "Ilia Kulikov, Chenxi Whitehouse, Tianhao Wu, Yixin Nie, Swarnadeep Saha, Eryk Helenowski, Weizhe Yuan, Olga Golovneva, Jack Lanchantin, Yoram Bachrach, Jakob Foerster, Xian Li, Han Fang, Sainbayar Sukhbaatar, Jason Weston",
       "template": "freeform",
       "published_at": "2026-07-31"
+    },
+    {
+      "id": "2505.24832",
+      "title": "How much do language models memorize?",
+      "authors": "John X. Morris, Chawin Sitawarin, Chuan Guo, Narine Kokhlikyan, G. Edward Suh, Alexander M. Rush, Kamalika Chaudhuri, Saeed Mahloujifar",
+      "template": "freeform",
+      "published_at": "2026-08-01"
     }
   ]
 }
