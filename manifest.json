@@ -59,6 +59,13 @@
       "authors": "John X. Morris, Chawin Sitawarin, Chuan Guo, Narine Kokhlikyan, G. Edward Suh, Alexander M. Rush, Kamalika Chaudhuri, Saeed Mahloujifar",
       "template": "freeform",
       "published_at": "2026-08-01"
+    },
+    {
+      "id": "2405.04517",
+      "title": "xLSTM: Extended Long Short-Term Memory",
+      "authors": "Maximilian Beck, Korbinian Pöppel, Markus Spanring, Andreas Auer, Oleksandra Prudnikova, Michael Kopp, Günter Klambauer, Johannes Brandstetter, Sepp Hochreiter",
+      "template": "freeform",
+      "published_at": "2026-08-08"
     }
   ]
 }
