@@ -66,6 +66,13 @@
       "authors": "Maximilian Beck, Korbinian Pöppel, Markus Spanring, Andreas Auer, Oleksandra Prudnikova, Michael Kopp, Günter Klambauer, Johannes Brandstetter, Sepp Hochreiter",
       "template": "freeform",
       "published_at": "2026-08-08"
+    },
+    {
+      "id": "2104.10157",
+      "title": "VideoGPT: Video Generation using VQ-VAE and Transformers",
+      "authors": "Wilson Yan, Yunzhi Zhang, Pieter Abbeel, Aravind Srinivas",
+      "template": "freeform",
+      "published_at": "2026-08-09"
     }
   ]
 }
