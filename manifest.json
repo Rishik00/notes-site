@@ -73,6 +73,13 @@
       "authors": "Wilson Yan, Yunzhi Zhang, Pieter Abbeel, Aravind Srinivas",
       "template": "freeform",
       "published_at": "2026-08-09"
+    },
+    {
+      "id": "2310.12036",
+      "title": "A General Theoretical Paradigm to Understand Learning from Human Preferences",
+      "authors": "Mohammad Gheshlaghi Azar, Mark Rowland, Bilal Piot, Daniel Guo, Daniele Calandriello, Michal Valko, Rémi Munos",
+      "template": "freeform",
+      "published_at": "2026-08-11"
     }
   ]
 }
