@@ -80,6 +80,13 @@
       "authors": "Mohammad Gheshlaghi Azar, Mark Rowland, Bilal Piot, Daniel Guo, Daniele Calandriello, Michal Valko, Rémi Munos",
       "template": "freeform",
       "published_at": "2026-08-11"
+    },
+    {
+      "id": "2505.05522",
+      "title": "Continuous Thought Machines",
+      "authors": "Luke Darlow, Ciaran Regan, Sebastian Risi, Jeffrey Seely, Llion Jones",
+      "template": "freeform",
+      "published_at": "2026-08-15"
     }
   ]
 }
