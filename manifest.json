@@ -87,6 +87,13 @@
       "authors": "Luke Darlow, Ciaran Regan, Sebastian Risi, Jeffrey Seely, Llion Jones",
       "template": "freeform",
       "published_at": "2026-08-15"
+    },
+    {
+      "id": "2207.02862",
+      "title": "Verifying the Union of Manifolds Hypothesis for Image Data",
+      "authors": "Bradley C. A. Brown, Anthony L. Caterini, Brendan Leigh Ross, Jesse C. Cresswell, Gabriel Loaiza-Ganem",
+      "template": "freeform",
+      "published_at": "2026-08-23"
     }
   ]
 }
