@@ -94,6 +94,13 @@
       "authors": "Bradley C. A. Brown, Anthony L. Caterini, Brendan Leigh Ross, Jesse C. Cresswell, Gabriel Loaiza-Ganem",
       "template": "freeform",
       "published_at": "2026-08-23"
+    },
+    {
+      "id": "2605.09992",
+      "title": "Attention Drift: What Autoregressive Speculative Decoding Models Learn",
+      "authors": "Doğaç Eldenk, Payal Mohapatra, Yigitcan Comlek, Kaan Oktay, Hongyang Zhang, Stephen Xia",
+      "template": "freeform",
+      "published_at": "2026-08-30"
     }
   ]
 }
