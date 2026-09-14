@@ -101,6 +101,13 @@
       "authors": "Doğaç Eldenk, Payal Mohapatra, Yigitcan Comlek, Kaan Oktay, Hongyang Zhang, Stephen Xia",
       "template": "freeform",
       "published_at": "2026-08-30"
+    },
+    {
+      "id": "2106.01345",
+      "title": "Decision Transformer: Reinforcement Learning via Sequence Modeling",
+      "authors": "Lili Chen, Kevin Lu, A. Rajeswaran, Kimin Lee, Aditya Grover, M. Laskin, P. Abbeel, A. Srinivas, Igor Mordatch",
+      "template": "freeform",
+      "published_at": "2026-09-14"
     }
   ]
 }
