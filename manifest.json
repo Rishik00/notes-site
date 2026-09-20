@@ -108,6 +108,13 @@
       "authors": "Lili Chen, Kevin Lu, A. Rajeswaran, Kimin Lee, Aditya Grover, M. Laskin, P. Abbeel, A. Srinivas, Igor Mordatch",
       "template": "freeform",
       "published_at": "2026-09-14"
+    },
+    {
+      "id": "2608.28444",
+      "title": "Sliding-window beats linear attention",
+      "authors": "Alexia Jolicoeur-Martineau, Rhea Sanjay Sukthanker, Pashmina Cameron, Emy Gervais",
+      "template": "freeform",
+      "published_at": "2026-09-20"
     }
   ]
 }
