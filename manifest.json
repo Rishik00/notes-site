@@ -122,6 +122,13 @@
       "authors": "",
       "template": "freeform",
       "published_at": "2026-09-30"
+    },
+    {
+      "id": "2603.22665",
+      "title": "Improving LLM Final Representations with Inter-Layer Geometry",
+      "authors": "Tom Ulanovski, Eyal Blyachman, Maya Bechler-Speicher",
+      "template": "freeform",
+      "published_at": "2026-09-30"
     }
   ]
 }
