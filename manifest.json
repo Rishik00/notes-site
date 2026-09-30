@@ -115,6 +115,13 @@
       "authors": "Alexia Jolicoeur-Martineau, Rhea Sanjay Sukthanker, Pashmina Cameron, Emy Gervais",
       "template": "freeform",
       "published_at": "2026-09-20"
+    },
+    {
+      "id": "local-f9c41cb77b8b29e0",
+      "title": "2607.01849v1",
+      "authors": "",
+      "template": "freeform",
+      "published_at": "2026-09-30"
     }
   ]
 }
