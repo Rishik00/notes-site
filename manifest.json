@@ -129,6 +129,13 @@
       "authors": "Tom Ulanovski, Eyal Blyachman, Maya Bechler-Speicher",
       "template": "freeform",
       "published_at": "2026-09-30"
+    },
+    {
+      "id": "2609.04963",
+      "title": "Fractal basins trap latent reasoning",
+      "authors": "Jeffrey Lai, Anthony Bao, John Quinn, William Gilpin",
+      "template": "freeform",
+      "published_at": "2026-10-03"
     }
   ]
 }
