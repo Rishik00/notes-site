@@ -136,6 +136,13 @@
       "authors": "Jeffrey Lai, Anthony Bao, John Quinn, William Gilpin",
       "template": "freeform",
       "published_at": "2026-10-03"
+    },
+    {
+      "id": "2610.05885",
+      "title": "The Optimization Landscape of Learning Compacted Context Models",
+      "authors": "Thomas Villeneuve, Alex Sandomirsky, Charles O'Neill, Max Kirkby, Michael Psenka",
+      "template": "freeform",
+      "published_at": "2026-11-08"
     }
   ]
 }
