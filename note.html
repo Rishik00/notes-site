@@ -32,7 +32,6 @@
   <header class="site-header">
     <div class="shell header-inner">
       <a class="brand" href="https://notapenguin.vercel.app/">Rishikesh Mallagundla</a>
-      <nav class="site-nav" aria-label="Current section"><a href="index.html" aria-current="page">Notes</a></nav>
       <button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
           <circle cx="12" cy="12" r="4.5"></circle>
@@ -125,6 +124,17 @@
       return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     }
 
+    function readingMinutes(markdown) {
+      const text = String(markdown)
+        .replace(/```[\s\S]*?```/g, ' ')
+        .replace(/`[^`]*`/g, ' ')
+        .replace(/!\[[^\]]*\]\([^)]+\)/g, ' ')
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+        .replace(/[#>*_~$\\[\]{}()|=+-]/g, ' ');
+      const words = text.trim().split(/\s+/).filter(Boolean).length;
+      return Math.max(1, Math.ceil(words / 220));
+    }
+
     async function render() {
       const root = document.getElementById('root');
       const id = getId();
@@ -156,6 +166,7 @@
       const bits = [];
       if (data.authors) bits.push('<span>' + esc(data.authors) + '</span>');
       if (data.arxiv) bits.push('<a href="https://arxiv.org/abs/' + esc(data.arxiv) + '" target="_blank" rel="noopener">arXiv ' + esc(data.arxiv) + '</a>');
+      bits.push('<span>' + readingMinutes(noteBody) + ' min read</span>');
       if (bits.length) byline = '<p class="byline">' + bits.join('') + '</p>';
 
       root.innerHTML =

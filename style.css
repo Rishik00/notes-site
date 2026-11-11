@@ -87,7 +87,7 @@ a { color: inherit; }
 
 .header-inner {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 2.25rem;
 }
@@ -97,27 +97,6 @@ a { color: inherit; }
   font-weight: 600;
   letter-spacing: -0.015em;
   text-decoration: none;
-}
-
-.site-nav { justify-self: end; }
-
-.site-nav a {
-  position: relative;
-  color: var(--ink-2);
-  font-size: 14.5px;
-  text-decoration: none;
-}
-
-.site-nav a::after {
-  position: absolute;
-  bottom: -7px;
-  left: 50%;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--ink);
-  content: '';
-  transform: translateX(-50%);
 }
 
 .theme-toggle {
@@ -172,23 +151,6 @@ a { color: inherit; }
   font-size: 1.02rem;
 }
 
-.list-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.list-head h2,
-.list-head span {
-  margin: 0;
-  color: var(--muted);
-  font-size: 13.5px;
-  font-weight: 500;
-}
-
 .note-list { margin: 0; padding: 0; list-style: none; }
 .note-list li { border-bottom: 1px solid var(--line); }
 
@@ -239,7 +201,7 @@ a { color: inherit; }
 }
 
 /* Note page */
-.note-page { max-width: var(--measure); }
+.note-page { max-width: var(--shell); }
 
 .back {
   display: inline-block;
@@ -258,7 +220,7 @@ a { color: inherit; }
 }
 
 .note-head h1 {
-  max-width: 42rem;
+  max-width: 52rem;
   margin: 0 0 1rem;
   font-size: clamp(2rem, 5vw, 2.65rem);
   font-weight: 600;
@@ -288,6 +250,7 @@ a { color: inherit; }
 .content a:hover { background-image: linear-gradient(var(--ink), var(--ink)); }
 
 .content {
+  max-width: var(--measure);
   font-size: 1.06rem;
   line-height: 1.72;
   letter-spacing: -0.003em;
@@ -371,8 +334,7 @@ mjx-container { overflow-x: auto; overflow-y: hidden; }
 @media (max-width: 640px) {
   .shell { padding-inline: 1.25rem; }
   .site-header { padding-top: 1.25rem; }
-  .header-inner { grid-template-columns: minmax(0, 1fr) auto auto; gap: 1rem; }
-  .site-nav { justify-self: auto; }
+  .header-inner { gap: 1rem; }
   .page { padding-block: 3.5rem 5rem; }
   .note-list a { grid-template-columns: minmax(0, 1fr) auto; row-gap: 0.25rem; }
   .note-list time { grid-column: 1 / -1; }
