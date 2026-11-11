@@ -4,6 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Note</title>
+  <meta name="description" content="A reading note from Paper Trails." />
+  <script>
+    (() => {
+      const saved = localStorage.getItem('theme');
+      const dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    })();
+  </script>
   <link rel="stylesheet" href="style.css" />
   <script>
     // Mirror ReadXiv's note convention (client/src/utils/mathjax.js):
@@ -21,7 +29,19 @@
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
-  <main class="wrap">
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="https://notapenguin.vercel.app/">Rishikesh Mallagundla</a>
+      <nav class="site-nav" aria-label="Current section"><a href="index.html" aria-current="page">Notes</a></nav>
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.5"></circle>
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+  <main class="shell page note-page">
     <a class="back" href="index.html">← All notes</a>
     <div id="root"><div class="state">Loading…</div></div>
   </main>
@@ -122,7 +142,10 @@
 
       const { data, body } = parseFrontmatter(raw);
       const md = window.markdownit({ html: false, linkify: true, typographer: true });
-      const { out, store } = protectMath(body);
+      // The page header already displays the frontmatter title. ReadXiv notes
+      // conventionally repeat it as the first Markdown H1, so omit that copy.
+      const noteBody = body.replace(/^\s*#(?!#)\s+.*(?:\r?\n|$)+/, '');
+      const { out, store } = protectMath(noteBody);
       let html = md.render(out);
       html = restoreMath(html, store);
 
@@ -131,9 +154,9 @@
 
       let byline = '';
       const bits = [];
-      if (data.authors) bits.push(esc(data.authors));
-      if (data.arxiv) bits.push('<a href="https://arxiv.org/abs/' + esc(data.arxiv) + '" target="_blank" rel="noopener">arXiv:' + esc(data.arxiv) + '</a>');
-      if (bits.length) byline = '<p class="byline">' + bits.join(' · ') + '</p>';
+      if (data.authors) bits.push('<span>' + esc(data.authors) + '</span>');
+      if (data.arxiv) bits.push('<a href="https://arxiv.org/abs/' + esc(data.arxiv) + '" target="_blank" rel="noopener">arXiv ' + esc(data.arxiv) + '</a>');
+      if (bits.length) byline = '<p class="byline">' + bits.join('') + '</p>';
 
       root.innerHTML =
         '<header class="note-head"><h1>' + esc(title) + '</h1>' + byline + '</header>' +
@@ -145,6 +168,14 @@
     }
 
     render();
+  </script>
+  <script>
+    document.querySelector('.theme-toggle')?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      localStorage.setItem('theme', next);
+    });
   </script>
 </body>
 </html>

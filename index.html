@@ -4,14 +4,38 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Paper Trails</title>
+  <meta name="description" content="Reading notes published from ReadXiv." />
+  <script>
+    (() => {
+      const saved = localStorage.getItem('theme');
+      const dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    })();
+  </script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="wrap">
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="https://notapenguin.vercel.app/">Rishikesh Mallagundla</a>
+      <nav class="site-nav" aria-label="Current section"><a href="index.html" aria-current="page">Notes</a></nav>
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.5"></circle>
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+  <main class="shell page">
     <header class="site-head">
       <h1 id="site-title">Paper Trails</h1>
       <p id="site-subtitle"></p>
     </header>
+    <div class="list-head">
+      <h2>Reading notes</h2>
+      <span id="note-count"></span>
+    </div>
     <ul class="note-list" id="list">
       <li class="state">Loading…</li>
     </ul>
@@ -23,6 +47,12 @@
       const d = new Date(s);
       if (isNaN(d)) return s;
       return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    function esc(s) {
+      return String(s).replace(/[&<>"']/g, (c) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
     }
 
     async function load() {
@@ -55,18 +85,29 @@
         return;
       }
 
+      document.getElementById('note-count').textContent = notes.length + (notes.length === 1 ? ' note' : ' notes');
+
       list.innerHTML = notes.map((n, idx) => {
-        const meta = [n.authors, fmtDate(n.published_at)].filter(Boolean).join(' · ');
         return (
           '<li style="--i:' + idx + '"><a href="note.html?id=' + encodeURIComponent(n.id) + '">' +
-          '<div class="nt">' + (n.title || n.id) + '</div>' +
-          '<div class="meta"><span>' + meta + '</span></div>' +
+          '<time datetime="' + esc(n.published_at || '') + '">' + esc(fmtDate(n.published_at)) + '</time>' +
+          '<span class="note-copy"><span class="nt">' + esc(n.title || n.id) + '</span>' +
+          '<span class="meta">' + esc(n.authors || 'Author not listed') + '</span></span>' +
+          '<span class="paper-id">' + esc(n.id) + '</span>' +
           '</a></li>'
         );
       }).join('');
     }
 
     load();
+  </script>
+  <script>
+    document.querySelector('.theme-toggle')?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      localStorage.setItem('theme', next);
+    });
   </script>
 </body>
 </html>
