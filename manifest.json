@@ -143,6 +143,13 @@
       "authors": "Thomas Villeneuve, Alex Sandomirsky, Charles O'Neill, Max Kirkby, Michael Psenka",
       "template": "freeform",
       "published_at": "2026-11-08"
+    },
+    {
+      "id": "2607.27546",
+      "title": "Memory Efficient Tabular Foundation Models",
+      "authors": "Shuting Luo, Monika Mikhail Kanaan, Cameron Gordon, Anna Leontjeva, Simon Lucey",
+      "template": "freeform",
+      "published_at": "2026-11-11"
     }
   ]
 }
